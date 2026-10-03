@@ -200,6 +200,15 @@
                         alert("내용을 입력하세요.");
                         return;
                     }
+                    if (Number(price) <= 0) {
+                        alert("가격은 0보다 커야 합니다.");
+                        return;
+                    }
+
+                    if (Number(year) < 1900 || Number(year) > 2100) {
+                        alert("연도는 1900~2100 사이로 입력하세요.");
+                        return;
+                    }
 
                     if(updateId === 0){
 
