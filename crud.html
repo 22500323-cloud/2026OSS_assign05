@@ -1,6 +1,5 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Book Management</title>
@@ -8,314 +7,110 @@
 </head>
 
 <body>
+    <h1>Book Management</h1>
 
-<h1>Book Management</h1>
+    <form id="bookForm">
+        <input type="text" id="title" placeholder="Title">
+        <input type="text" id="author" placeholder="Author">
+        <input type="text" id="category" placeholder="Category">
+        <input type="number" id="price" placeholder="Price">
+        <input type="number" id="year" placeholder="Year">
 
-<div class="form-box">
+        <button type="submit" id="saveButton">Add Book</button>
+    </form>
 
-    <h2>Book Input</h2>
+    <hr>
 
-    <div class="form-row">
-        <label for="title">Title</label>
-        <input type="text" id="title">
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Year</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-    <div class="form-row">
-        <label for="author">Author</label>
-        <input type="text" id="author">
-    </div>
-
-    <div class="form-row">
-        <label for="category">Category</label>
-        <input type="text" id="category">
-    </div>
-
-    <div class="form-row">
-        <label for="price">Price</label>
-        <input type="number" id="price">
-    </div>
-
-    <div class="form-row">
-        <label for="year">Year</label>
-        <input type="number" id="year">
-    </div>
-
-    <button id="saveBtn">Add</button>
-    <button id="cancelBtn">Cancel</button>
-
-</div>
-
-<h2>Book List</h2>
-
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Year</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-
-    <tbody id="bookList">
-    </tbody>
-</table>
-
+        <tbody id="bookList">
+        </tbody>
+    </table>
 
 <script>
+        let books=[
+            {
+                id:1,
+                title:"Book1",
+                author:"bang",
+                category:"문학",
+                price:10000,
+                year:2024
+            },
+            {
+                id:2,
+                title:"Book2",
+                author:"kim",
+                category:"문학",
+                price:12000,
+                year:2025
+            },
+            {
+                id:3,
+                title:"Book3",
+                author:"Lee",
+                category:"문학",
+                price:12500,
+                year:2023
+            }
+        ];
+        const bookList=document.getElementById("bookList");
+        function renderBooks(){
+            bookList.innerHTML="";
+            books.forEach(function(book){
+                const row=document.createElement("tr");
 
-    // JavaScript Array
-    let books = [
-        {
-            id: 1,
-            title: "HTML",
-            author: "Kim",
-            category: "Web",
-            price: 10000,
-            year: 2024
-        },
-        {
-            id: 2,
-            title: "JavaScript",
-            author: "Lee",
-            category: "Programming",
-            price: 15000,
-            year: 2025
-        },
-        {
-            id: 3,
-            title: "Java",
-            author: "Park",
-            category: "Programming",
-            price: 20000,
-            year: 2023
-        }
-    ];
-
-
-    // DOM
-    const title = document.querySelector("#title");
-    const author = document.querySelector("#author");
-    const category = document.querySelector("#category");
-    const price = document.querySelector("#price");
-    const year = document.querySelector("#year");
-
-    const saveBtn = document.querySelector("#saveBtn");
-    const cancelBtn = document.querySelector("#cancelBtn");
-    const bookList = document.querySelector("#bookList");
-
-
-    // 수정 중인 책의 ID
-    let editId = null;
-
-
-    // Read
-    function render() {
-
-        bookList.innerHTML = "";
-
-        books.forEach(function(book) {
-
-            const row = document.createElement("tr");
-
-            const idCell = document.createElement("td");
-            idCell.innerText = book.id;
-
-            const titleCell = document.createElement("td");
-            titleCell.innerText = book.title;
-
-            const authorCell = document.createElement("td");
-            authorCell.innerText = book.author;
-
-            const categoryCell = document.createElement("td");
-            categoryCell.innerText = book.category;
-
-            const priceCell = document.createElement("td");
-            priceCell.innerText = book.price;
-
-            const yearCell = document.createElement("td");
-            yearCell.innerText = book.year;
-
-
-            // Action
-            const actionCell = document.createElement("td");
-
-
-            // Edit button
-            const editBtn = document.createElement("button");
-            editBtn.innerText = "Edit";
-
-            editBtn.addEventListener("click", function() {
-
-                title.value = book.title;
-                author.value = book.author;
-                category.value = book.category;
-                price.value = book.price;
-                year.value = book.year;
-
-                editId = book.id;
-
-                saveBtn.innerText = "Update";
-            });
-
-
-            // Delete button
-            const deleteBtn = document.createElement("button");
-            deleteBtn.innerText = "Delete";
-
-            deleteBtn.addEventListener("click", function() {
-
-                if (confirm("Delete this book?")) {
-
-                    const index = books.indexOf(book);
-
-                    books.splice(index, 1);
-
-                    render();
-                }
-            });
-
-
-            actionCell.appendChild(editBtn);
-            actionCell.appendChild(deleteBtn);
-
-            row.appendChild(idCell);
-            row.appendChild(titleCell);
-            row.appendChild(authorCell);
-            row.appendChild(categoryCell);
-            row.appendChild(priceCell);
-            row.appendChild(yearCell);
-            row.appendChild(actionCell);
+                row.innerHTML = `
+                <td>${book.id}</td>
+                <td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.category}</td>
+                <td>${book.price}</td>
+                <td>${book.year}</td>
+                <td>
+                    <button>Update</button>
+                    <button>Delete</button>
+                </td>
+            `;
 
             bookList.appendChild(row);
-        });
-    }
-
-
-    // Add / Update
-    saveBtn.addEventListener("click", function() {
-
-        // Validation 1
-        if (title.value.trim() === "") {
-            alert("Please enter a title.");
-            title.focus();
-            return;
-        }
-
-        // Validation 2
-        if (author.value.trim() === "") {
-            alert("Please enter an author.");
-            author.focus();
-            return;
-        }
-
-        // Validation 3
-        if (category.value.trim() === "") {
-            alert("Please enter a category.");
-            category.focus();
-            return;
-        }
-
-        // Validation 4
-        if (price.value === "") {
-            alert("Please enter a price.");
-            price.focus();
-            return;
-        }
-
-        // Validation 5
-        if (Number(price.value) <= 0) {
-            alert("Price must be greater than 0.");
-            price.focus();
-            return;
-        }
-
-        // Validation 6
-        if (year.value === "") {
-            alert("Please enter a year.");
-            year.focus();
-            return;
-        }
-
-
-        // Update
-        if (editId !== null) {
-
-            const book = books.find(function(book) {
-                return book.id === editId;
             });
-
-            book.title = title.value;
-            book.author = author.value;
-            book.category = category.value;
-            book.price = Number(price.value);
-            book.year = Number(year.value);
-
-            editId = null;
-
-            saveBtn.innerText = "Add";
-
         }
+                renderBooks();
 
-        // Create
-        else {
 
-            let newId = 1;
+        const bookForm = document.getElementById("bookForm");
 
-            if (books.length > 0) {
-                newId = books[books.length - 1].id + 1;
-            }
+        bookForm.addEventListener("submit", function(event) {
+
+            event.preventDefault();
 
             const newBook = {
-                id: newId,
-                title: title.value,
-                author: author.value,
-                category: category.value,
-                price: Number(price.value),
-                year: Number(year.value)
+                id: books.length + 1,
+                title: document.getElementById("title").value,
+                author: document.getElementById("author").value,
+                category: document.getElementById("category").value,
+                price: Number(document.getElementById("price").value),
+                year: Number(document.getElementById("year").value)
             };
 
             books.push(newBook);
-        }
 
+            renderBooks();
 
-        // 화면 갱신
-        render();
-
-        // Input 초기화
-        title.value = "";
-        author.value = "";
-        category.value = "";
-        price.value = "";
-        year.value = "";
-    });
-
-
-    // Cancel
-    cancelBtn.addEventListener("click", function() {
-
-        title.value = "";
-        author.value = "";
-        category.value = "";
-        price.value = "";
-        year.value = "";
-
-        editId = null;
-
-        saveBtn.innerText = "Add";
-    });
-
-
-    // 처음 페이지가 실행될 때
-    window.addEventListener("load", function() {
-        render();
-    });
-
-</script>
-
+            bookForm.reset();
+        });
+    </script>
 </body>
 </html>
-```
