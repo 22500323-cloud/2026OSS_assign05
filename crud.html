@@ -4,6 +4,46 @@
     <meta charset="UTF-8">
     <title>Book Management</title>
 
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    input {
+        padding: 8px;
+        margin: 5px;
+    }
+
+    button {
+        padding: 8px 12px;
+        margin: 3px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: lightgray;
+    }
+</style>
+
 </head>
 
 <body>
@@ -69,134 +109,134 @@
         let updateId=0;
 
         function renderBooks(){
-    bookList.innerHTML="";
+        bookList.innerHTML="";
 
-    books.forEach(function(book){
+        books.forEach(function(book){
 
-        const row=document.createElement("tr");
+            const row=document.createElement("tr");
 
-        const id=document.createElement("td");
-        id.textContent=book.id;
-        row.appendChild(id);
+            const id=document.createElement("td");
+            id.textContent=book.id;
+            row.appendChild(id);
 
-        const title=document.createElement("td");
-        title.textContent=book.title;
-        row.appendChild(title);
+            const title=document.createElement("td");
+            title.textContent=book.title;
+            row.appendChild(title);
 
-        const author=document.createElement("td");
-        author.textContent=book.author;
-        row.appendChild(author);
+            const author=document.createElement("td");
+            author.textContent=book.author;
+            row.appendChild(author);
 
-        const category=document.createElement("td");
-        category.textContent=book.category;
-        row.appendChild(category);
+            const category=document.createElement("td");
+            category.textContent=book.category;
+            row.appendChild(category);
 
-        const price=document.createElement("td");
-        price.textContent=book.price;
-        row.appendChild(price);
+            const price=document.createElement("td");
+            price.textContent=book.price;
+            row.appendChild(price);
 
-        const year=document.createElement("td");
-        year.textContent=book.year;
-        row.appendChild(year);
+            const year=document.createElement("td");
+            year.textContent=book.year;
+            row.appendChild(year);
 
-        const action=document.createElement("td");
+            const action=document.createElement("td");
 
-        const updateButton=document.createElement("button");
-        updateButton.textContent="Update";
-        action.appendChild(updateButton);
+            const updateButton=document.createElement("button");
+            updateButton.textContent="Update";
+            action.appendChild(updateButton);
 
-        updateButton.addEventListener("click", function(){
-            updateId=book.id;
+            updateButton.addEventListener("click", function(){
+                updateId=book.id;
 
-            document.getElementById("title").value = book.title;
-            document.getElementById("author").value = book.author;
-            document.getElementById("category").value = book.category;
-            document.getElementById("price").value = book.price;
-            document.getElementById("year").value = book.year;
+                document.getElementById("title").value = book.title;
+                document.getElementById("author").value = book.author;
+                document.getElementById("category").value = book.category;
+                document.getElementById("price").value = book.price;
+                document.getElementById("year").value = book.year;
 
-});
-
-        const deleteButton=document.createElement("button");
-        deleteButton.textContent="Delete";
-        action.appendChild(deleteButton);
-
-        row.appendChild(action);
-
-        deleteButton.addEventListener("click", function(){
-
-            const result=confirm("삭제하시겠습니까?");
-
-            if(result){
-
-                books=books.filter(function(item){
-                    return item.id !== book.id;
-                });
-
-                renderBooks();
-            }
-
-        });
-
-        bookList.appendChild(row);
     });
-}
-                renderBooks();
 
+            const deleteButton=document.createElement("button");
+            deleteButton.textContent="Delete";
+            action.appendChild(deleteButton);
 
-        const bookForm = document.getElementById("bookForm");
+            row.appendChild(action);
 
-        bookForm.addEventListener("submit", function(event) {
+            deleteButton.addEventListener("click", function(){
 
-            event.preventDefault();
+                const result=confirm("삭제하시겠습니까?");
 
-                const title = document.getElementById("title").value;
-                const author = document.getElementById("author").value;
-                const category = document.getElementById("category").value;
-                const price = document.getElementById("price").value;
-                const year = document.getElementById("year").value;
+                if(result){
 
-
-                if (title === "" || author === "" || category === "" || price === "" || year === "") {
-                    alert("내용을 입력하세요.");
-                    return;
-                }
-
-                if(updateId === 0){
-
-                    const newBook = {
-                        id: books.length + 1,
-                        title: title,
-                        author: author,
-                        category: category,
-                        price: Number(price),
-                        year: Number(year)
-                    };
-
-                    books.push(newBook);
-
-                } else {
-
-                    books.forEach(function(book){
-
-                        if(book.id === updateId){
-
-                            book.title = title;
-                            book.author = author;
-                            book.category = category;
-                            book.price = Number(price);
-                            book.year = Number(year);
-
-                        }
-
+                    books=books.filter(function(item){
+                        return item.id !== book.id;
                     });
 
-                    updateId = 0;
+                    renderBooks();
                 }
 
-                renderBooks();
+            });
 
-                bookForm.reset();     
+            bookList.appendChild(row);
+        });
+    }
+                    renderBooks();
+
+
+            const bookForm = document.getElementById("bookForm");
+
+            bookForm.addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                    const title = document.getElementById("title").value;
+                    const author = document.getElementById("author").value;
+                    const category = document.getElementById("category").value;
+                    const price = document.getElementById("price").value;
+                    const year = document.getElementById("year").value;
+
+
+                    if (title === "" || author === "" || category === "" || price === "" || year === "") {
+                        alert("내용을 입력하세요.");
+                        return;
+                    }
+
+                    if(updateId === 0){
+
+                        const newBook = {
+                            id: books.length + 1,
+                            title: title,
+                            author: author,
+                            category: category,
+                            price: Number(price),
+                            year: Number(year)
+                        };
+
+                        books.push(newBook);
+
+                    } else {
+
+                        books.forEach(function(book){
+
+                            if(book.id === updateId){
+
+                                book.title = title;
+                                book.author = author;
+                                book.category = category;
+                                book.price = Number(price);
+                                book.year = Number(year);
+
+                            }
+
                         });
-                    </script>
-                </body>
-                </html>
+
+                        updateId = 0;
+                    }
+
+                    renderBooks();
+
+                    bookForm.reset();     
+                            });
+                        </script>
+                    </body>
+                    </html>
