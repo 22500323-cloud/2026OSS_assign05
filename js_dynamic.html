@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>JavaScript DOM Practice</title>
+    
+        <script>
+            window.onload=function(){
+                const itemInput=document.getElementById("itemInput");
+                const addBtn=document.getElementById("addBtn");
+                const itemList=document.getElementById("itemList");
+
+                addBtn.addEventListener("click", function(){
+                    const value=itemInput.value;
+
+                    if(value.trim()===""){
+                    alert("item을 입력하시오.");
+                return;
+                    }
+
+                    const li=document.createElement("li");
+                    li.innerText=value;
+
+                    const deleteBtn=document.createElement("button");
+                    deleteBtn.innerText="Delete";
+
+                    deleteBtn.addEventListener("click",function(){
+                        li.remove();
+                    });
+                    li.appendChild(deleteBtn);
+                    itemList.appendChild(li);
+                    itemInput.value="";
+                });
+            };
+        </script>
+    </head>
+
+    <body>
+        <h1>JavaScript DOM Practice</h1>
+        <input type="text" id="itemInput" placeholder="Enter an item">
+        <button id="addBtn">ADD</button>
+        <ul id="itemList"></ul>
+
+
+    </body>
+</html>
