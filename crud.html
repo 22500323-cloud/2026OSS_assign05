@@ -66,27 +66,80 @@
             }
         ];
         const bookList=document.getElementById("bookList");
+        let updateId=0;
+
         function renderBooks(){
-            bookList.innerHTML="";
-            books.forEach(function(book){
-                const row=document.createElement("tr");
+    bookList.innerHTML="";
 
-                row.innerHTML = `
-                <td>${book.id}</td>
-                <td>${book.title}</td>
-                <td>${book.author}</td>
-                <td>${book.category}</td>
-                <td>${book.price}</td>
-                <td>${book.year}</td>
-                <td>
-                    <button>Update</button>
-                    <button>Delete</button>
-                </td>
-            `;
+    books.forEach(function(book){
 
-            bookList.appendChild(row);
-            });
-        }
+        const row=document.createElement("tr");
+
+        const id=document.createElement("td");
+        id.textContent=book.id;
+        row.appendChild(id);
+
+        const title=document.createElement("td");
+        title.textContent=book.title;
+        row.appendChild(title);
+
+        const author=document.createElement("td");
+        author.textContent=book.author;
+        row.appendChild(author);
+
+        const category=document.createElement("td");
+        category.textContent=book.category;
+        row.appendChild(category);
+
+        const price=document.createElement("td");
+        price.textContent=book.price;
+        row.appendChild(price);
+
+        const year=document.createElement("td");
+        year.textContent=book.year;
+        row.appendChild(year);
+
+        const action=document.createElement("td");
+
+        const updateButton=document.createElement("button");
+        updateButton.textContent="Update";
+        action.appendChild(updateButton);
+
+        updateButton.addEventListener("click", function(){
+            updateId=book.id;
+
+            document.getElementById("title").value = book.title;
+            document.getElementById("author").value = book.author;
+            document.getElementById("category").value = book.category;
+            document.getElementById("price").value = book.price;
+            document.getElementById("year").value = book.year;
+
+});
+
+        const deleteButton=document.createElement("button");
+        deleteButton.textContent="Delete";
+        action.appendChild(deleteButton);
+
+        row.appendChild(action);
+
+        deleteButton.addEventListener("click", function(){
+
+            const result=confirm("삭제하시겠습니까?");
+
+            if(result){
+
+                books=books.filter(function(item){
+                    return item.id !== book.id;
+                });
+
+                renderBooks();
+            }
+
+        });
+
+        bookList.appendChild(row);
+    });
+}
                 renderBooks();
 
 
@@ -97,31 +150,53 @@
             event.preventDefault();
 
                 const title = document.getElementById("title").value;
-    const author = document.getElementById("author").value;
-    const category = document.getElementById("category").value;
-    const price = document.getElementById("price").value;
-    const year = document.getElementById("year").value;
+                const author = document.getElementById("author").value;
+                const category = document.getElementById("category").value;
+                const price = document.getElementById("price").value;
+                const year = document.getElementById("year").value;
 
-    if (title === "" || author === "" || category === "" || price === "" || year === "") {
-        alert("내용을 입력하세요.");
-        return;
-    }
 
-            const newBook = {
-                id: books.length + 1,
-                title: document.getElementById("title").value,
-                author: document.getElementById("author").value,
-                category: document.getElementById("category").value,
-                price: Number(document.getElementById("price").value),
-                year: Number(document.getElementById("year").value)
-            };
+                if (title === "" || author === "" || category === "" || price === "" || year === "") {
+                    alert("내용을 입력하세요.");
+                    return;
+                }
 
-            books.push(newBook);
+                if(updateId === 0){
 
-            renderBooks();
+                    const newBook = {
+                        id: books.length + 1,
+                        title: title,
+                        author: author,
+                        category: category,
+                        price: Number(price),
+                        year: Number(year)
+                    };
 
-            bookForm.reset();
-        });
-    </script>
-</body>
-</html>
+                    books.push(newBook);
+
+                } else {
+
+                    books.forEach(function(book){
+
+                        if(book.id === updateId){
+
+                            book.title = title;
+                            book.author = author;
+                            book.category = category;
+                            book.price = Number(price);
+                            book.year = Number(year);
+
+                        }
+
+                    });
+
+                    updateId = 0;
+                }
+
+                renderBooks();
+
+                bookForm.reset();     
+                        });
+                    </script>
+                </body>
+                </html>
