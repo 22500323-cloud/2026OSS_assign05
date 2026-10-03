@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>덧셈 계산기</title>
+    <script>
+        function add() {
+            const num1 = document.querySelector("#num1").value;
+            const num2 = document.querySelector("#num2").value;
+
+            const result = Number(num1) + Number(num2);
+
+            document.querySelector("#result").value = result;
+        }
+
+            function clickMe(){
+        //const btn=document.getElementById("clickBtn");
+        const btn=document.querySelector("#clickBtn");
+
+        btn.innerText="Clicked!"
+    }
+    </script>
+
+
+   <!--클릭버튼 실습-->
+   <script>
+    function checkForm(e){
+        const username=document.querySelector("#username");
+        if(username.value ==''){
+            alert('이름을 입력하세요.');
+            username.focus();
+            e.preventDefault();
+        }
+    }
+
+    window.addEventListener("load", function(){
+        const btn1 = document.querySelector("btn1");
+        btn1.addEventListener("click", clickme);
+
+        const form1=document.querySelector("#form1");
+        form1.addEventListener("submit",checkForm);
+    });
+   </script>
+
+
+</head>
+
+<body>
+    <!--클릭버튼 실습-->
+    <h3>Internal JS</h3>
+    <button id="clickBtn2"></button>Click Me</button>
+
+
+   <!--클릭버튼 실습-->
+    <h3>Inline JS</h3>
+
+    <div id="clickBtn"onclick="clickMe()"></div>Click Me</div>   
+
+
+
+    <!--계산기-->
+    <h1>덧셈 계산기</h1>
+    <input type="text" id="num1" size="4">
+    <input type="text" id="num2" size="4">
+    <button id="addBtn">+</button>
+
+    <input id="result">
+
+    <button id="btn1">Click Me</button>
+    <form id="form1" action="login_ok.html" method="post">
+        <input type="text" name="username" placeholder="이름을 입력하세요." required/>
+        <input type="submit" value="로그인">
+    </form>
+</body>
+</html>
+
+<script>
+    const clickBtn2=document.querySelector(#clickBtn2);
+    clickBtn2.addEventListener("click",(event){
+        clickBtn2.innerHTML="<h1>버튼이 클릭되었습니다.</h1>";
+    });
+</script>

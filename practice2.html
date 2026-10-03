@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>form->list실습</title>
+
+        <script>
+            function delFruit(e){
+                e.target.parentElement.remove();
+            }
+
+            window.addEventListener("load", function(){
+
+                const name = document.querySelector("#name");
+                const email = document.querySelector("#email");
+                const addbtn = document.querySelector("#addbtn");
+                const list = document.querySelector("#list");
+
+                addbtn.addEventListener("click", function(){
+
+                    const li = document.createElement("li");
+
+                    li.textContent = name.value + " / " + email.value;
+
+                    const btn = document.createElement("button");
+                    btn.textContent = "삭제";
+
+                    li.appendChild(btn);
+                    list.appendChild(li);
+
+                    btn.addEventListener("click", delFruit);
+                });
+
+            });
+        </script>
+    </head>
+
+    <body>
+
+        <input type="text" id="name" placeholder="이름을 입력하세요.">
+        <input type="text" id="email" placeholder="이메일을 입력하세요.">
+
+        <button id="addbtn">추가</button>
+
+        <ul id="list">
+        </ul>
+
+    </body>
+</html>
+

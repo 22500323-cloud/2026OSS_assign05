@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>동적 리스트 실습</title>
+        <script>
+            function delFruit(e){
+                e.target.parentElement.remove();
+            }
+            window.addEventListener("load", function(){
+                const fruit=document.querySelector("#fruit");
+                const addbtn=document.querySelector("#addbtn");
+                const list=document.querySelector("#list");
+
+                addbtn.addEventListener("click", function(){
+                    let flist=fruit.value.split(",");
+                    for(let i=0; i<flist.length; i++){
+                        const li =document.createElement("li");
+                        li.textContent=flist[i];
+                        list.appendChild(li);
+
+                        const btn=document.createElement("button");
+                        btn.textContent="삭제";
+                        li.appendChild(btn);
+                        btn.addEventListener("click",delFruit);
+                    }
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <h1>과일 목록</h1>
+        <input type="text" id="fruit" placeholder="과일을 입력하세요.">
+        <button id="addbtn">추가</button>
+        <ul id="list">
+        </ul>
+
+
+    </body>
+</html>
